@@ -1,0 +1,427 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	line-height:200%;
+	font-size:12.0pt;
+	font-family:"Times New Roman",serif;}
+.MsoChpDefault
+	{font-size:12.0pt;
+	font-family:"Aptos",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:115%;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link="#467886" vlink="#96607D" style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>Anna Nur
+Delia</b></p>
+
+<p class=MsoNormal align=center style='text-align:center;line-height:150%'><b>Laporan
+Proyek Machine Learning</b></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>1.
+Pra-Pemrosesan Data</b></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>Data sensor
+mentah memiliki banyak kolom yang mengandung nilai kosong (NA) atau tidak
+relevan seperti ID, <i>timestamp,</i> dan nama pengguna. Langkah-langkah
+praproses meliputi:</p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Menghapus
+     fitur dengan proporsi NA yang tinggi</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Menghapus
+     variabel yang tidak berkontribusi terhadap prediksi</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Mengonversi
+     variabel target <i>classe </i>menjadi faktor</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Membagi data
+     ke dalam <i>training</i> (70%) dan <i>validation </i>(30%) untuk evaluasi
+     model</li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>2. Pemilihan
+dan Pelatihan Model</b></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>Berbagai
+algoritma dipertimbangkan, termasuk:</p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Decision Tree
+     (rpart)</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Support Vector
+     Machines</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Gradient
+     Boosting Machines</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Random<b> </b>Forest
+     <i>(model yang dipilih)</i></li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>Alasan
+memilih Random Forest:</b></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Akurasi tinggi
+     pada data training</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Stabil pada
+     data <i>noisy</i></li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Cocok untuk
+     data dengan dimensi tinggi dan korelasi antar fitur</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Menangani <i>overfitting</i>
+     dengan baik</li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>2.1.
+Bagaimana Algoritme Random Forest Dibangun</b></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>Random Forest
+adalah algoritme <i>ensemble learning</i> berbasis pohon keputusan (<i>decision
+tree</i>) yang bekerja dengan cara membangun banyak pohon untuk membuat
+prediksi yang lebih akurat dan stabil.</p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>Langkah-langkah
+pembentukannya:</p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'> <b>a. Bootstrap
+Sampling (Bagging)</b></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Dari data
+     pelatihan utama, dibuat beberapa subset acak menggunakan sampling dengan
+     pengembalian.</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Masing-masing
+     subset akan digunakan untuk membangun satu pohon keputusan.</li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>b.
+Pembentukan Pohon Keputusan</b></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Untuk setiap
+     subset data, dibangun sebuah <i>decision tree.</i></li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Pada setiap
+     split, hanya sebagian kecil fitur yang dipilih secara acak untuk
+     dipertimbangkan — ini menciptakan variasi antar pohon.</li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>c. Voting
+Mayoritas (Klasifikasi)</b></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Setiap pohon
+     memberikan prediksi.</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Hasil akhir
+     adalah prediksi yang paling sering dipilih (voting mayoritas).</li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'> Contoh: Jika 10
+pohon memprediksi &quot;B&quot;, 7 memprediksi &quot;A&quot;, maka hasil akhirnya
+adalah &quot;B&quot;.</p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>Kelebihan
+Random Forest:</b></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Mengurangi <i>overfitting</i></li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Tahan terhadap
+     noise dan data tidak lengkap</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Bekerja baik
+     pada data berdimensi tinggi</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Akurasi tinggi
+     tanpa banyak tuning parameter</li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>Parameter
+yang digunakan:</b></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>ntree = 100:
+     Jumlah pohon</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>mtry = √p:
+     Jumlah fitur acak yang dipilih pada tiap split (otomatis oleh caret)</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>trainControl(method
+     = &quot;cv&quot;, number = 10): Validasi silang 10-lipat</li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>3. Validasi
+Silang</b></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>Model dilatih
+menggunakan 10-fold cross-validation, yaitu membagi data menjadi 10 bagian: 9 bagian
+untuk training dan 1 untuk validasi, dilakukan sebanyak 10 kali. <span lang=FR>Proses
+ini menggunakan trainControl(method = &quot;cv&quot;, number = 10) dari paket
+caret.</span></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><span lang=FR> Hasil
+akurasi dari validasi silang mencapai lebih dari 99%.</span></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><span lang=FR>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>4. Evaluasi
+Kinerja</b></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>Evaluasi
+dilakukan terhadap <i>validation set (</i>30% data).</p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Akurasi model:
+     Sekitar 98–99%</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Confusion
+     Matrix menunjukkan kesalahan merata antar kelas</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Out-of-sample
+     error sangat kecil, menunjukkan model generalizable</li>
+</ul>
+
+<p class=MsoNormal style='margin-left:.5in;text-align:justify;line-height:150%'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>5. Penilaian
+Kesalahan Out-of-Sample</b></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>Out-of-sample
+error adalah tingkat kesalahan model saat digunakan pada data yang tidak pernah
+dilihat sebelumnya. Dalam proyek ini, error tersebut sangat kecil (sekitar
+1–2%), yang menunjukkan bahwa model mampu mengeneralisasi dengan baik.</p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>Saya menganggap kesalahan
+ini sudah dapat diterima, karena:</p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Model tidak
+     mengalami overfitting</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Sudah
+     divalidasi silang secara menyeluruh</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Random Forest
+     memang unggul untuk kasus klasifikasi seperti ini</li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>Namun, saya juga
+menyadari bahwa dalam penerapan nyata, error bisa bertambah jika:</p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Data sensor
+     berubah kualitasnya (noise)</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Aktivitas
+     manusia lebih beragam dari yang dilatih</li>
+ <li class=MsoNormal style='text-align:justify;line-height:150%'>Ada perbedaan
+     distribusi data (data drift)</li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>Karena itu,
+model sebaiknya dipantau dan disesuaikan secara berkala untuk mempertahankan
+akurasi dalam jangka panjang.</p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'><b>6. Prediksi
+pada Data Pengujian (20 Kasus)</b></p>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>Model final
+digunakan untuk memprediksi 20 observasi dari <u>pml-testing.csv</u>. Berikut
+hasilnya:</p>
+
+<table class=MsoNormalTable border=0 cellpadding=0>
+ <thead>
+  <tr>
+   <td style='padding:.75pt .75pt .75pt .75pt'>
+   <p class=MsoNormal style='text-align:justify;line-height:150%'><b>No</b></p>
+   </td>
+   <td style='padding:.75pt .75pt .75pt .75pt'>
+   <p class=MsoNormal style='text-align:justify;line-height:150%'><b>Prediksi</b></p>
+   </td>
+   <td colspan=2 style='padding:.75pt .75pt .75pt .75pt'>
+   <p class=MsoNormal style='text-align:justify;line-height:150%'><b>No</b></p>
+   </td>
+   <td style='padding:.75pt .75pt .75pt .75pt'>
+   <p class=MsoNormal style='text-align:justify;line-height:150%'><b>Prediksi</b></p>
+   </td>
+  </tr>
+ </thead>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>1</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>B</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>11</p>
+  </td>
+  <td colspan=2 style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>B</p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>2</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>A</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>12</p>
+  </td>
+  <td colspan=2 style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>C</p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>3</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>B</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>13</p>
+  </td>
+  <td colspan=2 style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>B</p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>4</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>A</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>14</p>
+  </td>
+  <td colspan=2 style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>A</p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>5</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>A</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>15</p>
+  </td>
+  <td colspan=2 style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>E</p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>6</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>E</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>16</p>
+  </td>
+  <td colspan=2 style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>E</p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>7</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>D</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>17</p>
+  </td>
+  <td colspan=2 style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>A</p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>8</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>B</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>18</p>
+  </td>
+  <td colspan=2 style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>B</p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>9</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>A</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>19</p>
+  </td>
+  <td colspan=2 style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>B</p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>10</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>A</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>20</p>
+  </td>
+  <td colspan=2 style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal style='text-align:justify;line-height:150%'>B</p>
+  </td>
+ </tr>
+ <tr height=0>
+  <td width=25 style='border:none'></td>
+  <td width=61 style='border:none'></td>
+  <td width=22 style='border:none'></td>
+  <td width=2 style='border:none'></td>
+  <td width=62 style='border:none'></td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-align:justify;line-height:150%'>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>

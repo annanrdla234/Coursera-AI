@@ -1,0 +1,154 @@
+---
+Generator: Microsoft Word 15 (filtered)
+lang: EN-US
+---
+
+::: WordSection1
+**Anna Nur Delia**
+
+**Laporan Proyek Machine Learning**
+
+**1. Pra-Pemrosesan Data**
+
+Data sensor mentah memiliki banyak kolom yang mengandung nilai kosong
+(NA) atau tidak relevan seperti ID, *timestamp,* dan nama pengguna.
+Langkah-langkah praproses meliputi:
+
+-   Menghapus fitur dengan proporsi NA yang tinggi
+-   Menghapus variabel yang tidak berkontribusi terhadap prediksi
+-   Mengonversi variabel target *classe* menjadi faktor
+-   Membagi data ke dalam *training* (70%) dan *validation* (30%) untuk
+    evaluasi model
+
+** **
+
+**2. Pemilihan dan Pelatihan Model**
+
+Berbagai algoritma dipertimbangkan, termasuk:
+
+-   Decision Tree (rpart)
+-   Support Vector Machines
+-   Gradient Boosting Machines
+-   Random Forest *(model yang dipilih)*
+
+**Alasan memilih Random Forest:**
+
+-   Akurasi tinggi pada data training
+-   Stabil pada data *noisy*
+-   Cocok untuk data dengan dimensi tinggi dan korelasi antar fitur
+-   Menangani *overfitting* dengan baik
+
+**2.1. Bagaimana Algoritme Random Forest Dibangun**
+
+Random Forest adalah algoritme *ensemble learning* berbasis pohon
+keputusan (*decision tree*) yang bekerja dengan cara membangun banyak
+pohon untuk membuat prediksi yang lebih akurat dan stabil.
+
+Langkah-langkah pembentukannya:
+
+ **a. Bootstrap Sampling (Bagging)**
+
+-   Dari data pelatihan utama, dibuat beberapa subset acak menggunakan
+    sampling dengan pengembalian.
+-   Masing-masing subset akan digunakan untuk membangun satu pohon
+    keputusan.
+
+**b. Pembentukan Pohon Keputusan**
+
+-   Untuk setiap subset data, dibangun sebuah *decision tree.*
+-   Pada setiap split, hanya sebagian kecil fitur yang dipilih secara
+    acak untuk dipertimbangkan --- ini menciptakan variasi antar pohon.
+
+**c. Voting Mayoritas (Klasifikasi)**
+
+-   Setiap pohon memberikan prediksi.
+-   Hasil akhir adalah prediksi yang paling sering dipilih (voting
+    mayoritas).
+
+ Contoh: Jika 10 pohon memprediksi \"B\", 7 memprediksi \"A\", maka
+hasil akhirnya adalah \"B\".
+
+**Kelebihan Random Forest:**
+
+-   Mengurangi *overfitting*
+-   Tahan terhadap noise dan data tidak lengkap
+-   Bekerja baik pada data berdimensi tinggi
+-   Akurasi tinggi tanpa banyak tuning parameter
+
+**Parameter yang digunakan:**
+
+-   ntree = 100: Jumlah pohon
+-   mtry = √p: Jumlah fitur acak yang dipilih pada tiap split (otomatis
+    oleh caret)
+-   trainControl(method = \"cv\", number = 10): Validasi silang 10-lipat
+
+ 
+
+**3. Validasi Silang**
+
+Model dilatih menggunakan 10-fold cross-validation, yaitu membagi data
+menjadi 10 bagian: 9 bagian untuk training dan 1 untuk validasi,
+dilakukan sebanyak 10 kali. [Proses ini menggunakan trainControl(method
+= \"cv\", number = 10) dari paket caret.]{lang="FR"}
+
+[ Hasil akurasi dari validasi silang mencapai lebih dari
+99%.]{lang="FR"}
+
+[ ]{lang="FR"}
+
+**4. Evaluasi Kinerja**
+
+Evaluasi dilakukan terhadap *validation set (*30% data).
+
+-   Akurasi model: Sekitar 98--99%
+-   Confusion Matrix menunjukkan kesalahan merata antar kelas
+-   Out-of-sample error sangat kecil, menunjukkan model generalizable
+
+ 
+
+**5. Penilaian Kesalahan Out-of-Sample**
+
+Out-of-sample error adalah tingkat kesalahan model saat digunakan pada
+data yang tidak pernah dilihat sebelumnya. Dalam proyek ini, error
+tersebut sangat kecil (sekitar 1--2%), yang menunjukkan bahwa model
+mampu mengeneralisasi dengan baik.
+
+Saya menganggap kesalahan ini sudah dapat diterima, karena:
+
+-   Model tidak mengalami overfitting
+-   Sudah divalidasi silang secara menyeluruh
+-   Random Forest memang unggul untuk kasus klasifikasi seperti ini
+
+Namun, saya juga menyadari bahwa dalam penerapan nyata, error bisa
+bertambah jika:
+
+-   Data sensor berubah kualitasnya (noise)
+-   Aktivitas manusia lebih beragam dari yang dilatih
+-   Ada perbedaan distribusi data (data drift)
+
+Karena itu, model sebaiknya dipantau dan disesuaikan secara berkala
+untuk mempertahankan akurasi dalam jangka panjang.
+
+ 
+
+**6. Prediksi pada Data Pengujian (20 Kasus)**
+
+Model final digunakan untuk memprediksi 20 observasi dari
+[pml-testing.csv]{.underline}. Berikut hasilnya:
+
+  **No**   **Prediksi**   **No**       **Prediksi**
+  -------- -------------- -------- --- --------------
+  1        B              11       B   
+  2        A              12       C   
+  3        B              13       B   
+  4        A              14       A   
+  5        A              15       E   
+  6        E              16       E   
+  7        D              17       A   
+  8        B              18       B   
+  9        A              19       B   
+  10       A              20       B   
+                                       
+
+ 
+:::
